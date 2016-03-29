@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<manifest>
+	<application>
+		<name>站内搜索</name>                  
+		<alias>search</alias>
+		<version>1.0</version>	 
+		<pw-version>9.0</pw-version>       
+		<description>百度站内搜索~~</description>   
+		<logo>http://www.medz.cn/windid/attachment/avatar/000/00/00/1.jpg</logo>		
+		<type>app</type>					
+		<charset>UTF-8</charset>		 
+		<website></website>	 
+		<author-name>Medz Seven</author-name>		     
+		<author-email>lovevipdsw@vip.qq.com</author-email>		  	
+		<author-icon>http://www.medz.cn/windid/attachment/avatar/000/00/00/1.jpg</author-icon>	         
+	</application>
+
+	<res>res</res>
+
+	<installation-service></installation-service>
+	<inject-services>
+<s_admin_menu>
+	<app_search>
+	<class>EXT:search.service.srv.App_Search_ConfigDo</class>
+	<loadway>load</loadway>
+	<method>getAdminMenu</method>
+	<description>站内搜索admin menu</description>
+	</app_search>
+	</s_admin_menu>
+</inject-services>
+</manifest>
