@@ -1,0 +1,76 @@
+<!doctype html>
+<html>
+<head>
+<template source='TPL:common.wap.head' load='true' />
+<link href="{@theme:css}/wap_forum.css?v={@NEXT_RELEASE}" rel="stylesheet" />
+</head>
+<body>
+<pw-start/>
+<div class="wrap">
+<template source='TPL:common.wap.header' load='true' />
+	<div class="main_wrap">
+		<pw-tpl id="main_segment"/>
+		<div class="wps cc">
+		<div class="bread_crumb">
+			{@$headguide|html}<!--# if ($tab == 'digest') { #--><em>&gt;</em><a href="{@url:bbs/cate/run?fid=$fid&tab=digest}">精华</a><!--#}#-->
+		</div>
+		</div>
+		<pw-tpl id="cateTop_segment"/>
+					<pw-tpl id="first_segment"/>
+					<template source='wap.widget_forum' load='true' />
+					<pw-tpl id="cate_middle"/>
+					<pw-tpl id="cate_bottom"/>
+					<section class="face_list" style="display:none;">
+						<h2 class="hd"><a href="#" class="fr fn">查看更多&gt;&gt;</a>当前在线</h2>
+						<article class="ct">
+							<ul class="cc">
+								<!--#$online = Wekit::load('SRV:online.srv.PwOnlineCountService');#-->
+								<!--#$list = $online->getLastVisitor($pwforum->fid);#-->
+								<!--#foreach ($list as $value){ #-->
+								<li><a href="#"><img src="{@G:url.images}/face/face_small.jpg" width="48" height="48" alt="{$value['username']}"><br />{$value['username']}</a></li>
+								<!--# } #-->
+							</ul>
+						</article>
+					</section>
+		<!--# if ($operateThread) { #-->
+		<div id="J_post_manage_main" class="core_pop_wrap J_post_manage_pop" style="display:none;position:fixed;_position:absolute;">
+			<div class="core_pop">
+				<div style="width:415px;">
+					<div class="pop_top"><a href="#" id="J_post_manage_close" class="pop_close">关闭</a><strong class="mr5">帖子操作</strong>(已选中&nbsp;<span class="red" id="J_post_checked_count">1</span>&nbsp;篇&nbsp;&nbsp;<a href="" class="s4" id="J_post_manage_checkall" data-type="check">全选</a>)</div>
+					<div class="pop_cont">
+						<div class="pop_operat_list">
+							<ul class="cc J_post_manage_col" data-role="list">
+								<!--# if ($operateThread['topped']) { #--><li><a href="{@url:bbs/manage/topped}">置顶</a></li><!--# } #-->
+								<!--# if ($operateThread['digest']) { #--><li><a href="{@url:bbs/manage/digest}">精华</a></li><!--# } #-->
+								<!--# if ($operateThread['highlight']) { #--><li><a href="{@url:bbs/manage/highlight}">加亮</a></li><!--# } #-->
+								<!--# if ($operateThread['up']) { #--><li><a href="{@url:bbs/manage/up}">提前</a></li><!--# } #-->
+								<!--# if ($operateThread['type']) { #--><li><a href="{@url:bbs/manage/type}">分类</a></li><!--# } #-->
+								<!-- <li><a href="{@url:bbs/manage/topped}">印戳</a></li>  -->
+								<!--# if ($operateThread['move']) { #--><li><a href="{@url:bbs/manage/move}">移动</a></li><!--# } #-->
+								<!--# if ($operateThread['copy']) { #--><li><a href="{@url:bbs/manage/copy}">复制</a></li><!--# } #-->
+								<!--# if ($operateThread['unite']) { #--><li><a href="{@url:bbs/manage/unite}">合并</a></li><!--# } #-->
+								<!--# if ($operateThread['lock']) { #--><li><a href="{@url:bbs/manage/lock}">锁定</a></li><!--# } #-->
+								<!--# if ($operateThread['down']) { #--><li><a href="{@url:bbs/manage/down}">压帖</a></li><!--# } #-->
+								<!--# if ($operateThread['delete']) { #--><li><a href="{@url:bbs/manage/delete}">删除</a></li><!--# } #-->
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!--# } #-->
+	</div>
+<template source='TPL:common.wap.vi_footer' load='true' />
+</div>
+<script>
+Wind.use('jquery', 'global', function(){
+	<!--# if(!$is_design) { #-->
+		<!--# if ($operateThread) { #-->
+		Wind.js(GV.JS_ROOT +'pages/bbs/threadManage.js?v=' + GV.JS_VERSION);
+		<!--# } #-->
+	<!--# } #-->
+});
+</script>
+<pw-end/>
+</body>
+</html>

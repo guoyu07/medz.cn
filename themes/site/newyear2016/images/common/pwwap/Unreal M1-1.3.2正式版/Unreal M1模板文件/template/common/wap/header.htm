@@ -1,0 +1,135 @@
+<div id="page-wrapper">
+<!--#if ($site_info_notice = Wekit::C('site','info.notice')) {#-->
+<style>.header_wrap{top:29px;}body{padding-top:30px;}</style><div id="notice">{$site_info_notice}</div>
+<!--#}#-->
+<!--# if ($loginUser->isExists()) { #-->
+<div id="sidebar-wrapper">
+<div class="sidebar-wrapper-scroll" style="display: block;">
+<div class="user_r">
+<div class="user_top">
+<div class="avatar_m"><span><img src="{@Pw::getAvatar($loginUser->uid)}" zsrc="{@Pw::getAvatar($loginUser->uid)}" style="display: inline; visibility: visible;"></span></div>
+        <h2 class="name">{@Pw::substrs($loginUser->username,6)}</h2>
+        <div class="avatar_b">
+	    <!--# $_group = $loginUser->getGroupInfo(); #-->
+        <h2><span>用户组</span>{$_group['name']}</h2>
+        </div>
+</div>      
+    	<div class="user_r_b">
+            <ul>            
+	            <li><a href="{@url:space/profile/run}"><em class="icon_profile"></em>个人空间</a></li>
+				<!--#
+				$_url = '';
+				$_panelManage = false;
+
+				// $_toCheck: permission name => array(permission key, url path)
+				$_toCheck = array(
+					'panel_bbs_manage'     => array('thread_check', 'manage/content/run'),
+					'panel_user_manage'    => array('user_check', 'manage/user/run'),
+					'panel_report_manage'  => array('report_manage', 'manage/report/run'),
+					'panel_recycle_manage' => array('recycle', 'manage/recycle/run'),
+				);
+				foreach ($_toCheck as $_permName => $_permInfo) {
+					if ($_panelManage) {
+						break;
+					}
+					$_permission  = $loginUser->getPermission($_permName, false, array());
+					if ($_permission && isset($_permission[$_permInfo[0]])) {
+						$_url = $_permInfo[1];
+						$_panelManage = true;
+					}
+				}
+				if ($_panelManage) {
+				#-->
+					<li><a href="{@WindUrlHelper::createUrl($_url)|url}" rel="nofollow"><em class="icon_system"></em>前台管理</a></li>
+				<!--#} if (Pw::getstatus($loginUser->info['status'], PwUser::STATUS_ALLOW_LOGIN_ADMIN) || Pw::inArray(3, $loginUser->groups)) {#-->
+					<li><a href="{@Wind::getComponent('router')->getRoute('pw')->checkUrl('admin.php')}" target="_blank" rel="nofollow"><em class="icon_admin"></em>系统后台</a></li>
+				<!--# } #-->
+					<hook name="header_my" />
+					<li><a href="{@url:u/login/logout}" rel="nofollow"><em class="icon_quit"></em>退出</a></li>
+            </ul>       
+        </div>
+
+</div>
+</div>
+</div>
+<!--# } #-->
+<div id="content-wrapper" class="cc">
+<div id="hd">
+<h1 class="z">
+	<a href="{@url:}">
+		<!--# if($__css = Wekit::C('site', 'css.logo')) { #-->
+		<!--后台logo上传-->
+		<img src="{@Pw::getPath($__css)}" alt="{@Wekit::C('site','info.name')}">
+		<!--# } else { #-->
+		<img src="{@theme:site.images}/vi_wap/logo.png" alt="{@Wekit::C('site','info.name')}">
+		<!--# } #-->
+	</a>
+</h1>
+<a href="{@url:search/s/run}" class="so"><img src="{@theme:site.images}/vi_wap/s.png"></a>
+<!--# if ($loginUser->isExists()) { #-->
+<div class="fr user" id="a-sidebar">
+<a href="#" class="pic a-sidebar" style="display: inline;"><img src="{@Pw::getAvatar($loginUser->uid)}"></a>
+<a href="#" class="a-sidebar-show" style="display: none;"><img src="{@theme:site.images}/vi_wap/user_f.png"></a>
+</div>
+<!--# } else { #-->
+<div class="fr user">
+<a href="{@url:u/login/run}" class="pic_no"><img src="{@theme:site.images}/vi_wap/user.png" zsrc="{@theme:site.images}/vi_wap/user.png" style="display: inline; visibility: visible;"></a>
+</div>
+<!--# } #-->
+</div>
+<div id="nv" class="cl">
+<div class="list nv-list"><a title="list"><span></span></a>
+<ul>
+	<!--#
+		$nav = Wekit::load('SRV:nav.bo.PwNavBo');
+		$bottom = $nav->getNavFromConfig('bottom');
+		foreach($bottom as $key=>$value){
+	#-->
+		<li><em>{$value['name']|html}</em></li>
+	<!--# } #-->
+</ul>
+</div>
+<span class="vi_nv">
+	<!--# $nav = Wekit::load('SRV:nav.bo.PwNavBo');
+		  $nav->setRouter();
+		  $currentId =  '';
+		   $main = $child = array();
+		  if ($nav->isForum()) $nav->setForum($pwforum->foruminfo['parentid'], $fid, $tid);
+		  $main = $nav->getNavFromConfig('main', true);
+		  $i = 1;
+		  foreach($main as $key=>$value){
+			if ($value['current']) {
+				$current = 'a';
+				$currentId = $key;
+			} else {
+				$current = '';
+			}
+			$value['child'] && $child[$key] = $value['child'];
+            $value['name'] = str_ireplace(Wekit::C('site','info.url'),Wind::getApp()->getRequest()->getBaseUrl(true),$value['name']);
+          if($i == 4) break;
+          $i++;
+		  #-->
+					<span class="{$current}">{$value['name']|html}</span>
+	<!--# } #-->
+</span>
+</div>
+<hook name="header_nav"/>    
+<!--#
+if ($child) {
+foreach ($child as $ck => $cv) {
+	 if ($currentId == $ck){
+#-->
+	<div class="nav_weak" id="{$ck}">
+<!--# }else{ #-->
+	<div class="nav_weak" id="{$ck}" style="display:none">
+<!--# } #-->
+		<ul class="cc">
+			<!--# foreach($cv as $_v){
+				$current = $_v['current'] ? 'current' : '';
+			#-->
+			<li class="{$current}">{$_v['name']|html}</li>
+			<!--# } #-->
+		</ul>
+	</div>
+<!--#}} #-->
+<div class="tac"><advertisement id='Site.NavBanner' sys='1'/></div>

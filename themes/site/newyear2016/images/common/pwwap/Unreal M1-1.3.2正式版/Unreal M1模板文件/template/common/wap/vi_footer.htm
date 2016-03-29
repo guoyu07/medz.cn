@@ -1,0 +1,42 @@
+<!--.main-wrap,#main End-->
+<div class="tac">
+<advertisement id='Site.Footer1' sys='1'/><br />
+<advertisement id='Site.Footer2' sys='1'/>
+</div>
+<div id="fter">
+<div class="ful">
+<a href="javascript:;" onclick="history.go(-1)" class="z"><img src="{@theme:site.images}/vi_wap/icon_back.png" zsrc="{@theme:site.images}/vi_wap/icon_back.png" style="display: inline; visibility: visible;"></a>
+<a href="javascript:;" style="color:#aaa;">触屏版</a>
+<a href="javascript:notMobile()">电脑版</a> 
+<a onclick="window.scrollTo('0','0')" href="javascript:;">TOP</a>
+</div>
+</div>
+<advertisement id='Site.FloatLeft' sys='1'/>
+<advertisement id='Site.FloatRight' sys='1'/>
+<advertisement id='Site.PopupNotice' sys='1'/>
+<div id="cloudwind_common_bottom"></div>
+<hook name="footer"/>
+</div>
+<!--#  #-->
+</div>
+<script>
+function notMobile() {
+	document.cookie = "useMobile=no";
+    var url = window.location.href;
+    var reg = new RegExp("{@url:}", "i");
+    url = url.replace(reg, "{@Wekit::C('site','info.url')}"+"/");
+	window.location.href = url;
+}
+
+Wind.use('jquery', 'global', function(){
+    
+	//点击头部搜索
+	var head_search_a = $('#J_head_search_a');
+	if(head_search_a.length) {
+		Wind.Util.clickToggle({
+			elem : head_search_a,				//点击元素
+			list : $('#J_head_search_pop'),	});
+	}
+    
+});
+</script>

@@ -1,0 +1,51 @@
+<!doctype html>
+<html>
+<head>
+<template source='TPL:common.wap.head' load='true' />
+<link href="{@theme:css}/wap_forum.css?v={@NEXT_RELEASE}" rel="stylesheet" />
+</head>
+<body>
+<pw-start/>
+<div class="wrap">
+<template source='TPL:common.wap.header' load='true' />
+	<div class="main_wrap">
+		<pw-tpl id="main_segment"/>
+		<!--div class="bread_crumb">
+			{@$headguide|html}
+		</div-->
+		<div class="forum_page">
+			<div class="bbs_info_box">
+				<span>今日：{$todayposts}</span><i></i><span>昨日：{$bbsinfo['yposts']}</span><i></i><span>最高日：{$bbsinfo['hposts']}</span><i></i><span>帖子：{$article}</span><i></i><span>会员：{$bbsinfo['totalmember']}</span><i></i><span>新会员：<a href="{@url:space/index/run?username=$bbsinfo['newmember']}" target="_blank">{$bbsinfo['newmember']}</a></span>
+			</div>
+			<pw-tpl id="first_segment"/>
+			<div class="box_wrap">
+				<!--# foreach ($cateList as $_cateId => $_cate) { #-->
+				<div class="forum_group  forum_child">
+					<div class="box_title">
+						<div class="fr">
+							<!--#if ($_cate['manager']) {#-->
+								分栏版主：
+							<!--#foreach ($_cate['manager'] as $_name) {#-->
+								<a class="J_user_card_show" data-username="{$_name}" href="{@url:space/index/run?username=$_name}">{$_name} </a>
+							<!--#}#-->
+							<!--#}#-->
+						</div>
+						<h2 class="cname"><a href="{@url:bbs/cate/run?fid=$_cateId}">{$_cate['name']|html}</a></h2>
+					</div>
+					<segment tpl="wap.forum_list_table" name="one_across" args="$_cate,$forumList[$_cateId]" />
+				</div>
+				<!--# } #-->
+			</div>
+		</div>
+		<pw-tpl id="forumlist_bottom"/>
+	</div>
+
+<template source='TPL:common.wap.footer' load='true' />
+</div>
+<script>
+Wind.use('jquery', 'global', function(){
+});
+</script>
+<pw-end/>
+</body>
+</html>

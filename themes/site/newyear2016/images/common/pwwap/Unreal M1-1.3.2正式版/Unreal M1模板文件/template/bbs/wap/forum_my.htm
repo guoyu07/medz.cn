@@ -1,0 +1,81 @@
+<!doctype html>
+<html>
+<head>
+<template source='TPL:common.wap.head' load='true' />
+<link href="{@theme:css}/wap_forum.css?v={@NEXT_RELEASE}" rel="stylesheet" />
+</head>
+<body>
+<pw-start/>
+<div class="wrap">
+<template source='TPL:common.wap.header' load='true' />
+<link rel="stylesheet" href="{@theme:site.css}/swiper.css" type="text/css">
+<script src="{@theme:site.js}/jquery-swiper.js" type="text/javascript"></script>
+<script src="{@theme:site.js}/swiper.js" type="text/javascript"></script>
+<div class="swiper-main">
+<div class="swiper-container swiper1">
+<div class="swiper-wrapper">
+    <div class="swiper-slide"><a href="#"><img src="http://m.7vi.org/attachment/1502/thread/11_2_a336f3b25542ab1.png" alt="DOTA2"><span>Unreal U3</span></a></div>
+</div>
+</div>
+    <div class="pagination pagination1"></div>
+</div>
+<div class="title-t ">
+	<ul class="tabs" id="tabs">
+	    <li><a href="{@url:bbs/index/run?order=lastpost}">本站新帖</a></li>
+	    <li><a rel="nofollow" href="{@url:bbs/forum/my}">我的版块</a></li>
+	    <li class="{@Pw::isCurrent($order == 'postdate')}"><a href="{@url:bbs/forum/my?order=postdate}">最新发帖</a></li>
+	    <li class="{@Pw::isCurrent($order != 'postdate')}"><a href="{@url:bbs/forum/my}">最后回复</a></li>
+	</ul>
+</div>
+	<div class="main_wrap">
+		<pw-tpl id="main_segment"/>
+					<pw-tpl id="first_segment"/>
+					<advertisement id='Thread.Top' sys='1'/>
+					<div class="thread_page">
+						<div class="displaylist">
+							<!--# if ($threadList) { #-->
+							<div width="100%" id="J_posts_list" summary="帖子列表">
+								<ul>
+								<!--# foreach ($threadList as $key => $value) { #-->
+								<li>
+                                    <a href="{@url:bbs/read/run?tid=$value['tid']&fid=$value['fid']}" class="st" style="{$value['highlight_style']}" title="{$value['subject']}">
+                                    <h2>
+	                                    <span class="icon">
+	                                        <span class="posts_icon"><i class="icon_{$value['icon']}"></i></span>
+                                    		<!--# if ($value['ifupload']) { #-->
+                                    		<span class="posts_icon">
+                                    			<i class="icon_{$uploadIcon[$value['ifupload']]}" title="{$icon[$uploadIcon[$value['ifupload']]]}">
+                                    			</i>
+                                    		</span>
+                                            <!--# } #-->
+	                                    </span>{$value['subject']}
+	                                </h2>
+                                    <p class="cl">
+                                      <span class="num">{$value['hits']} / {$value['replies']}</span>
+                                      <span class="by"> {$value['created_username']} - <!--# echo Pw::time2str($value['created_time'], 'Y-m-d');#--></span>
+                                    </p>
+                                    </a>
+                                </li>
+								<!--# } #-->
+								</ul>
+							</div>
+							<!--# } else { #-->
+							<div class="not_followforum">
+							还没有内容？点击加入，轻松获取版块最新帖子
+							</div>
+							<!--# } #-->
+						</div>
+					</div>
+					<div class="J_page_wrap cc" data-key="true">
+						<page tpl="TPL:common.page" page="$page" per="$perpage" count="$count" total="$totalpage" url="bbs/forum/my" args="$urlargs"/>
+					</div>
+					<advertisement id='Thread.Btm' sys='1'/>
+	</div>
+<template source='TPL:common.wap.footer' load='true' />
+</div>
+<script>
+Wind.use('jquery', 'global');
+</script>
+<pw-end/>
+</body>
+</html>

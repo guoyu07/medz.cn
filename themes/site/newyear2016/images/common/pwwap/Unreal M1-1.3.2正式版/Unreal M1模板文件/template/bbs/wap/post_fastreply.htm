@@ -1,0 +1,13 @@
+<div class="reply_list">
+		<div class="reply_quick cc">
+			<div class="J_reply_page_list"><template source='post_replylist' load='true' /></div>
+			<div class="reply_quick cc">
+				<dd>
+					<textarea name="atc_content" id="J_reply_ta_{$pid}" style="height:40px;" class="J_at_user_textarea vi_reply" placeholder="我也说两句"></textarea>
+				</dd>
+			</dl>
+			<div class="ft cc J_reply_ft">
+				<button type="submit" data-tid="{$tid}" data-pid="{$pid}" class="btn btn_submit disabled J_reply_sub" disabled="disabled" data-action="{@url:bbs/post/doreply?_getHtml=2}" style="width:100%">回复</button>
+			</div>
+		</div>
+</div>

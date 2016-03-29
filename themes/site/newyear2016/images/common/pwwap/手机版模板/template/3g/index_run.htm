@@ -1,0 +1,132 @@
+<!doctype html>
+<html>
+<head>
+<template source='TPL:3g.head' load='true' />
+    <!--demo展示所用css，不用关心 begin-->
+    <link rel="stylesheet" type="text/css" href="{@theme:css}/3g/reset.css" />
+    <!--demo展示所用css end-->
+    <!--组件依赖css begin-->
+    <link rel="stylesheet" type="text/css" href="{@theme:css}/3g/widget/slider/slider.css" />
+    <link rel="stylesheet" type="text/css" href="{@theme:css}/3g/widget/slider/slider.default.css" /> 
+	<!--皮肤文件，若不使用该皮肤，可以不加载-->
+    <!--组件依赖css end-->
+    <!--组件依赖js begin-->
+    <script type="text/javascript" src="{@theme:site.js}/3g/zepto.js"></script>
+	<script type="text/javascript" src="{@theme:site.js}/3g/mobileevent2pc.js"></script>		
+	<!-- 此JS作用：在PC端方便查看效果，用在手机端时，可不引用 -->
+    <script type="text/javascript" src="{@theme:site.js}/3g/touch.js"></script>      
+	<!--新版zepto合并版中不包括touch.js-->
+    <script type="text/javascript" src="{@theme:site.js}/3g/zepto.extend.js"></script>
+    <script type="text/javascript" src="{@theme:site.js}/3g/zepto.ui.js"></script>
+    <script type="text/javascript" src="{@theme:site.js}/3g/widget/slider.js"></script>
+    <!--组件依赖js end-->
+</head>
+<body>
+<pw-start/>
+<template source='TPL:3g.header' load='true' />
+<div id="slider">
+<design id="D_mod_38" role="module"></design>
+</div>
+<script>
+    //创建slider组件
+    $('#slider').slider({loop:true});
+</script>
+<div class="fullscreen">
+  <div class="main_wrap">
+  <div class="icontent_nav">
+  <div class="icontent_filter {@Pw::isCurrent($order == 'postdate')}">
+  <a href="{@url:3g/index/run?order=postdate}" class="">最新发帖</a>
+   </div>
+    <div class="icontent_filter {@Pw::isCurrent($order != 'postdate')}">
+  <a href="{@url:3g/index/run?order=lastpost}" class="">最后回复</a>
+ </div>
+  </div>
+    <div class="main cc">
+      <div class="main_body">
+        <div class="main_content cc">
+          <div class="box_wrap thread_page J_check_wrap"> 
+            <!--# if ($threaddb) { #-->
+<!--#
+    $threadtids = array();
+    foreach ($threaddb as $value) {
+        $threadtids[] = $value['tid'];
+    }
+#-->
+<component class='SRV:forum.PwThread' method='fetchThread' args='$threadtids,2'/>
+<!--# $threadContent = $__tpl_data; #-->
+<component class='SRV:attach.PwThreadAttach' method='fetchAttachByTidsAndPid' args='$threadtids' />
+<!--#
+    $threadthumb = array();
+    foreach ($__tpl_data as $value) {
+        if ($value['ifthumb']) $threadthumb[$value['tid']][] = $value['path'];
+    }
+#-->
+
+            <div class="thread_posts_list">
+              <ul id="J_posts_list" summary="帖子列表">
+                <!--# foreach ($threaddb as $key => $value) { #-->
+<li tid="{$value['tid']}" class="post_list_item post_list_item_frs">
+<a class="linklist_item_link" href="{@url:3g/read/run?tid=$value['tid']}">
+<div class="cc linklist_icon"><span class="posts_icon fr"><i class="icon_{$value['icon']}" title="{$icon[$value['icon']]}"></i></span>
+<span class="linklist_author "><img class="J_avatar" src="{@Pw::getAvatar($value['created_userid'], 'small')}" data-type="small" width="45" height="45" alt="{$value['created_username']}" />{$value['created_username']}</span>
+</div>
+<span class="linklist_title">{@Pw::substrs($value['subject'],$numofthreadtitle)}</span>
+<!--# if ($forums[$value['fid']]) { #--><div class="f12 s2 mb5">{@$forums[$value['fid']]['name']|html}</div><!--# } #-->
+<!--# if (is_array($threadthumb[$value['tid']])){ #-->
+<div class="linklist_text" style="display:block">
+<!--#
+foreach ($threadthumb[$value['tid']] as $k=>$thumb) {if(1 == $k)break;
+#-->
+<div class="inimg">
+<img class="J_lazy" src="{@Pw::getPath($thumb,2)}" height="90"/>
+</div>
+<!--# } #-->
+<div class="intxt">					
+{@Pw::substrs(Pw::stripWindCode($threadContent[$value['tid']]['content'],true),50)}
+</div>
+</div>
+ <!--# } #-->
+<div class="cc">
+<div class="fr">
+<span class="linklist_time "><i></i>{$value['lastpost_username']}&nbsp;<em>({@Pw::time2str($value['lastpost_time'],'m-d H:i')})</em></span></div>
+<span class="linklist_reply"><i></i>{$value['replies']}/{$value['hits']}</span>
+</div>
+</a>
+</li>
+                <!--# } #-->
+              </ul>
+            </div>
+            <!--# if ($operateThread) { #--> 
+            <!--# } #--> 
+            <!--# } else { #-->
+            <div class="not_content"> 啊哦，本站暂没有任何内容哦！ </div>
+            <!--# } #--> 
+          </div>
+          <div class="J_page_wrap cc mt20" data-key="true">
+            <page tpl="TPL:common.page" page="$page" per="$perpage" count="$count" total="$totalpage" url="3g/index/run" args="$urlargs"/>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="mob_foot_nav"> <a href="index.php?m=3g" class="on" ><i class="forum"></i>最新帖子</a><a href="index.php?m=3g&c=forumlist"><i class="home"></i>首页</a><a class="mode" href="{@url:3g/message/run}"><template source='TPL:3g.msg_tips' load='true' /><i class="msg"></i>消息</a><a href="{@url:3g/profile/run}" ><i class="info"></i>个人中心</a> </div>
+<template source='TPL:3g.footer' load='true' />
+<script>
+var FID = '{$pwforum->fid}';
+Wind.use('jquery', 'global', function(){
+<!--# if(!$is_design) { #-->
+<!--# if (!$threaddb) { #-->
+	//无内容 发帖引导
+	Wind.js(GV.JS_ROOT + 'pages/bbs/postGuide.js?v=' + GV.JS_VERSION);
+<!--# } else { #-->
+	if(GV.U_ID) {
+		Wind.js(GV.JS_ROOT +'pages/bbs/threadManage.js?v=' + GV.JS_VERSION);
+	}
+<!--# } #-->
+<!--# } #-->
+});
+</script>
+<pw-end/>
+</body>
+</html>

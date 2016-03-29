@@ -1,0 +1,15 @@
+<hook-action name="one_across" args="cateForum,forumList">
+<!--#foreach ($forumList as $_id => $_item) {
+$_class = $_item['icon'] ? '' : ($_item['todayposts'] > 0 ? 'new' : 'old');
+#-->
+<a href="{@url:bbs/thread/run?fid=$_id}">
+<dl>
+    <dd class="img {$_class}">				
+        <!--#if($_item['icon']) {#--><img src="{@Pw::getPath($_item['icon'])}" align="left" alt="" zsrc="{@Pw::getPath($_item['icon'])}" style="display: inline; visibility: visible;"><!--# } else { #--><img src="{@theme:site.images}/vi_wap/old.gif" align="left" alt="" zsrc="{@theme:site.images}/vi_wap/old.gif" style="display: inline; visibility: visible;"><!--#}#-->   
+    </dd>
+    <dt>{@$_item['name']|html}<!--#if ($_item['todayposts']) {#--><em>{$_item['todayposts']}</em><!--#}#--></dt>
+    <dd>{$_item['descrip']|html}</dd>
+</dl>
+</a>
+<!--#}#-->
+</hook-action> 

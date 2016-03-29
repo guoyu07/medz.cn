@@ -1,0 +1,141 @@
+<!doctype html>
+<html>
+<head>
+<template source='TPL:common.wap.head' load='true' />
+<link href="http://m.7vi.org/themes/site/7vinext_U3/css/dev/wap_space.css?v={@NEXT_RELEASE}" rel="stylesheet" />
+<style type="text/css">
+.ui-panel-wrapper{
+z-index:2 !important;	
+}	
+</style>
+</head>
+<body>
+<div data-role="page">
+<template source='TPL:common.wap.header' load='true' />
+<div data-role="content"  class="space_user_wrap main_wrap" style="padding:0">
+  <div class="bgSpace">
+  	<img class="J_avatar" src="{@Pw::getAvatar($space->spaceUid,'big')}" data-type="big"  />
+ </div>
+ <style>body{background:#fff;}</style>
+  <div class="space_user_photo">
+    <div class="face"><img class="J_avatar" src="{@Pw::getAvatar($space->spaceUid,'big')}" data-type="big" /></div>
+    <div class="name">{$space->spaceUser['username']}</div>
+
+    <!--# if($space->tome != 2){ #-->
+    <div class="operate cc"> 
+      <!--# if($space->tome >= 4){ #--> 
+      <a class="follow unfollow J_space_follow J_qlogin_trigger" data-uid="{$space->spaceUid}" data-role="unfollow" href="{@url:my/follow/delete?uid=$space->spaceUid}" >取消关注</a> 
+      <!--# }else{ #--> 
+      <a rel="nofollow" class="J_space_follow follow J_qlogin_trigger" data-uid="{$space->spaceUid}" data-role="follow" href="{@url:my/follow/add}"><em></em>加关注</a> 
+      <!--# } #--> 
+	  </div>
+    <!--# } #--> 
+    
+  </div>
+
+	
+  <div class="space_content fullscreen">
+      <div class="space_profile">
+        <h3> 
+          <strong>基本资料</strong> &nbsp;[<span style="color:#F60;">访问量：{$space->space['visit_count']}</span>]</h3>
+        <dl class="cc">
+          <dt>UID</dt>
+          <dd>{$space->spaceUid}</dd>
+        </dl>
+        <dl class="cc">
+          <dt>头衔</dt>
+          <dd>{$groupName}</dd>
+        </dl>
+        <dl class="cc">
+          <dt>在线时长</dt>
+          <dd>{@floor($space->spaceUser['onlinetime']/3600)}&nbsp;小时</dd>
+        </dl>
+		  <dl class="cc">
+			<dt>性别</dt>
+			<dd>{@$space->spaceUser['gender'] == 1 ? '女' : '男'}</dd>
+		</dl>
+	  <dl class="cc">
+		<dt>年龄</dt>
+		<dd><!--# if ($space->spaceUser['byear'] == 0) { #--><!--# } else { #-->{$age}岁<!--# } #--></dd>
+	    </dl>
+        <!--# if ($space->allowView('constellation')){ #-->
+        <dl class="cc">
+          <dt>星座</dt>
+          <dd>{$constellation}</dd>
+        </dl>
+        <!--# } #--> 
+        <!--# if ($space->allowView('local')){ #-->
+        <dl class="cc">
+          <dt>现居住地</dt>
+          <dd>{$space->spaceUser['location']}</dd>
+        </dl>
+        <!--# } #--> 
+        <!--# if ($space->allowView('nation')){ #-->
+        <dl class="cc">
+          <dt>家乡</dt>
+          <dd>{$space->spaceUser['hometown']}</dd>
+        </dl>
+        <!--# } #-->
+		 <!--# if ($space->spaceUser['homepage']){ #-->  
+        <dl class="cc">
+          <dt>个人主页</dt>
+          <dd>{$space->spaceUser['homepage']}</dd>
+        </dl>
+		    <!--# } #-->
+        <dl class="cc">
+          <dt>注册日期</dt>
+          <dd>{@Pw::time2str($space->spaceUser['regdate'], 'Y年m月d日')}</dd>
+        </dl>
+        <dl class="cc">
+          <dt>最后登录</dt>
+          <dd>{@Pw::time2str($space->spaceUser['lastvisit'], 'Y年m月d日')}</dd>
+        </dl>
+      </div>
+      <!--# if ($space->allowView('aliwangwang') || $space->allowView('qq') || $space->allowView('msn') || $space->allowView('mobile')){ #-->
+      <div class="space_profile">
+        <h3>
+	 <strong>联系方式</strong> </h3>
+        
+        <!--# if ($space->allowView('aliwangwang')){ #-->
+        <dl class="cc">
+          <dt>阿里旺旺</dt>
+          <dd>{$space->spaceUser['aliww']}</dd>
+        </dl>
+        <!--# } #--> 
+        <!--# if ($space->allowView('qq')){ #-->
+        <dl class="cc">
+          <dt>QQ</dt>
+          <dd>{$space->spaceUser['qq']}</dd>
+        </dl>
+        <!--# } #--> 
+        <!--# if ($space->allowView('msn')){ #-->
+        <dl class="cc">
+          <dt>MSN</dt>
+          <dd>{$space->spaceUser['msn']}</dd>
+        </dl>
+        <!--# } #--> 
+        <!--# if ($space->allowView('mobile')){ #-->
+        <dl class="cc">
+          <dt>手机号码</dt>
+          <dd>{$space->spaceUser['mobile']}</dd>
+        </dl>
+        <!--# } #--> 
+      </div>
+      <!--# } #-->
+    </div>
+</div> 
+<template source='TPL:common.wap.footer' load='true' />
+<script>
+var SPACE_FOLLOW = "{@url:my/follow/add}", 
+		SPACE_UNFOLLOW = "{@url:my/follow/delete}";
+//引入js组件
+Wind.use('jquery', 'global','wap','wapApp', 'dialog', 'ajaxForm', 'tabs', 'draggable', 'uploadPreview', function(){
+	Wind.js(GV.JS_ROOT +'pages/space/space_index.js?v='+ GV.JS_VERSION);
+	$('.space_profile').eq(2).find('a').removeAttr('href').attr({href:"{@url:wap/education/run}"});
+	$('.space_profile').eq(3).find('a').removeAttr('href').attr({href:"{@url:wap/work/run}"});
+Wind.js(GV.JS_ROOT+ 'pages/wap/sendMsgPop.js?v='+ GV.JS_VERSION);
+});
+</script>
+</div>	
+</body>
+</html>

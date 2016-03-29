@@ -1,0 +1,23 @@
+<li>
+    <a href="{@url:bbs/read/run?tid=$value['tid']&fid=$value['fid']}" class="st" style="{$value['highlight_style']}" title="{$value['subject']}">
+    <h2>
+	<!--# if ($operateThread) { #-->
+    <input class="J_check" name="" type="checkbox" value="{$value['tid']}" />
+    <!--# } #-->
+	<span class="icon">
+	    <span class="posts_icon"><i class="icon_{$value['icon']}"></i></span>
+        <hook class='$threadList' name='createHtmlAfterSubject' args="array($value)" />
+        <!--# if ($value['ifupload']) { #-->
+            <span class="posts_icon">
+            <i class="icon_{$uploadIcon[$value['ifupload']]}" title="{$icon[$uploadIcon[$value['ifupload']]]}"></i>
+            </span>
+        <!--# } #-->
+	</span>{$value['subject']}
+	</h2>
+    <p class="cl">
+        <span class="num">{$value['hits']} / {$value['replies']}</span>
+        <span class="by"> {$value['created_username']} - <!--# echo Pw::time2str($value['created_time'], 'Y-m-d');#--></span>
+    </p>
+    </a>
+</li>
+<!--# $tpc_topped = isset($value['issort']); #-->

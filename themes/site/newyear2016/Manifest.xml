@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<manifest>
+	<application>
+		<name>PHPwind2016新年模板</name>
+		<alias>newyear2016</alias>
+		<version>20160205</version>
+		<pw-version>9.0</pw-version>
+		<charset>UTF-8</charset>
+		<type>style</type>
+		<style-type>site</style-type>
+		<description>PHPwind2016新年模板</description>
+		<logo>images/preview.jpg</logo>
+		<website></website>
+		<author-name>115啦团队：扣扣小子</author-name>
+		<author-email>382336977@qq.com</author-email>
+		<author-icon></author-icon>
+	</application>
+
+</manifest>

@@ -1,0 +1,30 @@
+<hook-action name="one_across" args="cateForum,forumList">
+<div class="ct">
+<!--#foreach ($forumList as $_id => $_item) {
+$_class = $_item['icon'] ? '' : ($_item['todayposts'] > 0 ? 'new' : 'old');
+#-->
+	<div class="item">
+		<div class="title {$_class}"<!--#if($_item['icon']) {#-->style="background-image:url({@Pw::getPath($_item['icon'])});"<!--#}#--> >
+			<h3 class="fname">
+                <a href="{@url:bbs/thread/run?fid=$_id}">{@$_item['name']|html}</a>
+                <!--#if ($_item['todayposts']) {#--><span class="org fn">(今日{$_item['todayposts']})</span><!--#}#-->
+                <span class="fn">主题<em class="org">{$_item['threads']}</em>&nbsp;帖子<!--#echo $_item['threads'] + $_item['posts'];#--></span>
+            </h3>
+            <div class="descrip">
+<!--#if ($_item['manager']) {#-->
+			版主：
+	<!--#foreach ($_item['manager'] as $name) {#-->
+			<a class="J_user_card_show" data-username="{$name}" href="{@url:space/index/run?username=$name}">{$name} </a>
+	<!--#}#-->
+			
+<!--#} #--> </div>
+    		<div class="last">
+    			<!--#if($_item['lastpost_time']){#-->最后回复：<a href="{@url:space/index/run?username=$_item['lastpost_username']}" class="last_name J_user_card_show" data-username="{$_item['lastpost_username']}">{$_item['lastpost_username']}</a><a href="{@url:bbs/read/run?tid=$_item['lastpost_tid']&fid=$_id&page=e}#a" aria-label="最后回复时间" title="跳转到最后一个楼层" class="last_name" rel="nofollow">{@Pw::time2str($_item['lastpost_time'], 'auto')}</a>
+    			<!--#}#-->
+    		</div>
+		</div>
+
+	</div>
+<!--#}#-->
+</div>
+</hook-action> 

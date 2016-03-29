@@ -1,0 +1,22 @@
+
+<header class="header_fixed">
+  <div class="header_wrap">
+    <div class="logo"><a href="index.php?m=3g&c=forumlist"><!--# if($__css = Wekit::C('site', 'css.logo')) { #-->
+<img src="{@Pw::getPath($__css)}" alt="{@Wekit::C('site','info.name')}" style="max-height:35px;margin-top:5px;" />
+<!--# } else { #-->
+<img src="{@theme:site.images}/3g_logo.png" alt="{@Wekit::C('site','info.name')}" style="max-height:35px;margin-top:5px;" />
+<!--# } #--></a></div>
+    <template source="TPL:3g.header_login" load="true" />
+    <a href="#" class="search_btn link_wbtn" id="J_head_msg_btn" aria-haspopup="J_head_msg_pop"><span>searhc</span></a>
+  </div>
+<div id="J_head_msg_pop" class="link_search" style="display:none;">
+<div class="wap_search">
+        <form action="{@url:search/s/run}" method="post">
+          <input type="text" id="s" aria-label="搜索关键词" accesskey="s" placeholder="搜索其实很简单" x-webkit-speech speech name="keyword" class="wap_inp"/>
+          <button type="submit" aria-label="搜索" class="wap_btn"></button>
+        </form>
+</div>
+</div>
+</header>
+
+

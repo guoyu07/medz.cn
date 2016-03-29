@@ -1,0 +1,152 @@
+/*
+===================
+个人中心
+===================
+*/
+.space_user_wrap {
+	position:relative;
+	margin-bottom:30px;
+}
+.bgSpace {
+	background:#fff url(../../images/vi_wap/user_bg.png);
+	overflow:hidden;
+	text-align:center;
+}
+.bgSpace img {
+	text-align:center;
+	width:100%;
+	opacity:.8;
+}
+.space_user_photo {
+	position:absolute;
+	text-align:center;
+	top:150px;
+	width:100%;
+	margin:0 auto;
+}
+.space_user_photo .face {
+	margin-bottom:15px;
+}
+.space_user_photo .face img {
+	border-radius:50%;
+	box-shadow:0 0 0 5px rgba(0,0,0,.3);
+	width:120px;
+	height:120px;
+	margin-left:20px;
+	margin-right:20px;
+}
+.space_user_photo .name {
+	line-height:30px;
+	height:30px;
+	font-size:30px;
+	color:#fff;
+	text-shadow:1px 1px  3px #000;
+	margin-bottom:15px;
+}
+/*勋章*/
+.space_user_photo .medal {
+	overflow:hidden;
+}
+.space_user_photo .medal li {
+	margin-right:6px;
+	margin-bottom:6px;
+	display:inline-block;
+	overflow:hidden;
+}
+.space_user_photo .medal li a {
+	display:block;
+	float:left;
+}
+.space_user_photo .medal li img {
+	vertical-align:top;
+}
+/*发邮件加关注*/
+.space_user_photo .operate {
+	text-align:center;
+}
+.space_user_photo .operate a,.space_user_photo .operate span {
+	float:left;
+	width:74px;
+	line-height:20px;
+	height:20px;
+	border:1px solid #d0dfea;
+	color:#666666;
+	border-radius:2px;
+	background:#ffffff;
+	background-repeat:no-repeat;
+	background-image:-webkit-gradient(linear,0 0,0 100%,from(#ffffff),to(#f3f8f9));
+	background-image:-webkit-linear-gradient(#ffffff,#f3f8f9);
+	background-image:-moz-linear-gradient(top,#ffffff,#f3f8f9);
+	background-image:-ms-linear-gradient(#ffffff,#f3f8f9);
+	background-image:-o-linear-gradient(#ffffff,#f3f8f9);
+	background-image:linear-gradient(#ffffff,#f3f8f9);
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff',endColorstr='#f3f8f9',GradientType=0);
+	_padding-top:3px;
+}
+.space_user_photo .operate a {
+	float:none;
+	display:inline-block;
+}
+.space_user_photo .operate a:hover {
+	color:#333;
+	text-decoration:none;
+}
+.space_user_photo .operate em {
+	width:13px;
+	height:13px;
+	overflow:hidden;
+	float:left;
+	margin:3px 2px 0 4px;
+	_margin:0 1px 0 4px;
+}
+.space_user_photo .operate .follow em {
+	background:url(../../images/vi_wap/mini_add.png) center center no-repeat;
+}
+.space_user_photo .operate .unfollow,.space_user_photo .operate .unfollow:hover {
+	text-align:center;
+	border-color:#dddddd;
+	background:#f7f7f7 !important;
+	filter:none;
+	color:#99bbc5;
+}
+/*
+===================
+资料-结构
+===================
+*/
+.space_profile {
+	padding:5px 5px 20px;
+	margin:0 5px 5px;
+	font-size:14px;
+}
+.space_profile h3 {
+	padding:10px 5px;
+	font-size:12px;
+	height:35px;
+	border-bottom:1px solid #e4e4e4;
+	margin-bottom:5px;
+}
+.space_profile h3 strong {
+	font-size:14px;
+}
+.space_profile h3 .edit {
+	float:right;
+	font-size:12px;
+	font-weight:100;
+	color:#1155CC;
+}
+.space_profile dl {
+	padding:5px;
+	color:#666;
+}
+.space_profile dt {
+	float:left;
+	width:90px;
+}
+.space_profile dd {
+	float:left;
+}
+.space_profile dd .school {
+	display:inline-block;
+	margin-right:10px;
+}

@@ -1,0 +1,152 @@
+<!doctype html>
+<html>
+<head>
+<template source='TPL:common.wap.head' load='true' />
+<link href="{@theme:css}/wap_forum.css?v={@NEXT_RELEASE}" rel="stylesheet" />
+</head>
+<body>
+<pw-start/>
+<div class="wrap">
+<template source='TPL:common.wap.header' load='true' />
+<link rel="stylesheet" href="{@theme:site.css}/swiper.css" type="text/css">
+<script src="{@theme:site.js}/jquery-swiper.js" type="text/javascript"></script>
+<script src="{@theme:site.js}/swiper.js" type="text/javascript"></script>
+<div class="swiper-main">
+<div class="swiper-container swiper1">
+<div class="swiper-wrapper">
+    <div class="swiper-slide"><a href="#"><img src="http://m.7vi.org/attachment/1502/thread/11_2_a336f3b25542ab1.png" alt="DOTA2"><span>Unreal U3</span></a></div>
+</div>
+</div>
+    <div class="pagination pagination1"></div>
+</div>
+<div class="title-t ">
+	<ul class="tabs" id="tabs">
+	    <li><a href="{@url:bbs/index/run?order=lastpost}">本站新帖</a></li>
+	    <!--# if ($loginUser->isExists()) { #--><li><a rel="nofollow" href="{@url:bbs/forum/my}">我的版块</a></li><!--# } #-->
+	    <li class="{@Pw::isCurrent($order == 'postdate')}"><a href="{@url:bbs/index/run?order=postdate}">最新发帖</a></li>
+	    <li class="{@Pw::isCurrent($order != 'postdate')}"><a href="{@url:bbs/index/run?order=lastpost}">最后回复</a></li>
+	</ul>
+</div>
+	<div class="main_wrap">
+		<pw-tpl id="main_segment"/>
+		<pw-tpl id="indexHead_segment"/>
+		<div id="cloudwind_forum_top"></div>
+					<pw-tpl id="first_segment"/>
+					<advertisement id='Thread.Top' sys='1'/>
+					<div class="thread_page J_check_wrap">
+						<!--公告-->
+						<component tpl='TPL:announce.announce' class='SRV:announce.srv.PwAnnounceService' method='getAnnounceForBbsScroll' args='array()'/>
+						<!--公告结束-->
+						<!--# if ($threaddb) { #-->
+                        <!--# $store = Wind::getComponent('storage');
+                              $ds = Wekit::load('attach.PwThreadAttach');
+                         #-->
+						<div class="displaylist">
+							<div width="100%" id="J_posts_list" summary="帖子列表">
+								<ul>
+								<!--# foreach ($threaddb as $key => $value) { #-->
+                                <li>
+                                    <a href="{@url:bbs/read/run?tid=$value['tid']&fid=$value['fid']}" class="st" style="{$value['highlight_style']}" title="{$value['subject']}">
+                                    <h2>
+	                                    <!--# if ($operateThread) { #-->
+                                    	<input class="J_check" name="" type="checkbox" value="{$value['tid']}" />
+                                    	<!--# } #-->
+	                                    <span class="icon">
+	                                        <span class="posts_icon"><i class="icon_{$value['icon']}"></i></span>
+                                    		<hook class='$threadList' name='createHtmlAfterSubject' args="array($value)" />
+                                    		<!--# if ($value['ifupload']) { #-->
+                                    		<span class="posts_icon">
+                                    			<i class="icon_{$uploadIcon[$value['ifupload']]}" title="{$icon[$uploadIcon[$value['ifupload']]]}">
+                                    			</i>
+                                    		</span>
+                                            <!--# } #-->
+	                                    </span>{$value['subject']}
+	                                </h2>
+                                    <p class="cl">
+                                      <span class="num">{$value['hits']} / {$value['replies']}</span>
+                                      <span class="by"> {$value['created_username']} - <!--# echo Pw::time2str($value['created_time'], 'Y-m-d');#--></span>
+                                    </p>
+                                    </a>
+                                </li>
+                                <!--# $tpc_topped = isset($value['issort']); #-->
+								<!--# } #-->
+								</ul>
+							</div>
+						</div>
+						<!--# if ($operateThread) { #-->
+						<div class="management cc J_post_manage_col" data-role="list">
+							<label class="fl mr10"><input class="J_check_all" type="checkbox">全选</label>
+							<!--# if ($operateThread['topped']){ #--><a href="{@url:bbs/manage/topped}">置顶</a><!--# } #-->
+							<!--# if ($operateThread['digest']){ #--><a href="{@url:bbs/manage/digest}">精华</a><!--# } #-->
+							<!--# if ($operateThread['highlight']){ #--><a href="{@url:bbs/manage/highlight}">加亮</a><!--# } #-->
+							<!--# if ($operateThread['up']){ #--><a href="{@url:bbs/manage/up}">提前</a><!--# } #-->
+							<!--# if ($operateThread['type']){ #--><a href="{@url:bbs/manage/type}">分类</a><!--# } #-->
+							<!--# if ($operateThread['move']){ #--><a href="{@url:bbs/manage/move}">移动</a><!--# } #-->
+							<!--# if ($operateThread['copy']){ #--><a href="{@url:bbs/manage/copy}">复制</a><!--# } #-->
+							<!--# if ($operateThread['unite']){ #--><a href="{@url:bbs/manage/unite}">合并</a><!--# } #-->
+							<!--# if ($operateThread['lock']){ #--><a href="{@url:bbs/manage/lock}">锁定</a><!--# } #-->
+							<!--# if ($operateThread['down']){ #--><a href="{@url:bbs/manage/down}">压帖</a><!--# } #-->
+							<!--# if ($operateThread['delete']){ #--><a href="{@url:bbs/manage/delete}">删除</a><!--# } #-->
+						</div>
+						<!--# } #-->
+						<!--# } else { #-->
+						<div class="not_content">
+							啊哦，本站暂没有任何内容哦！
+						</div>
+						<!--# } #-->
+					</div>
+					<div class="J_page_wrap cc" data-key="true">
+						<page tpl="TPL:common.page" page="$page" per="$perpage" count="$count" total="$totalpage" url="bbs/index/run" args="$urlargs"/>
+					</div>
+					<pw-tpl id="forum_bottom"/>
+					<!--# if ($operateThread) { #-->
+					<div id="J_post_manage_main" class="core_pop_wrap J_post_manage_pop" style="display:none;">
+						<div class="core_pop">
+							<div style="width:415px;">
+								<div class="pop_top"><a href="#" id="J_post_manage_close" class="pop_close">关闭</a><strong>帖子操作</strong>(已选中&nbsp;<span class="red" id="J_post_checked_count">1</span>&nbsp;篇&nbsp;&nbsp;<a href="" class="s4" id="J_post_manage_checkall" data-type="check">全选</a>)</div>
+								<div class="pop_cont">
+									<div class="pop_operat_list">
+										<ul class="cc">
+											<!--# if ($operateThread['topped']){ #--><li><a href="{@url:bbs/manage/topped}">置顶</a></li><!--# } #-->
+											<!--# if ($operateThread['digest']){ #--><li><a href="{@url:bbs/manage/digest}">精华</a></li><!--# } #-->
+											<!--# if ($operateThread['highlight']){ #--><li><a href="{@url:bbs/manage/highlight}">加亮</a></li><!--# } #-->
+											<!--# if ($operateThread['up']){ #--><li><a href="{@url:bbs/manage/up}">提前</a></li><!--# } #-->
+											<!--# if ($operateThread['type']){ #--><li><a href="{@url:bbs/manage/type}">分类</a></li><!--# } #-->
+											<!--# if ($operateThread['move']){ #--><li><a href="{@url:bbs/manage/move}">移动</a></li><!--# } #-->
+											<!--# if ($operateThread['copy']){ #--><li><a href="{@url:bbs/manage/copy}">复制</a></li><!--# } #-->
+											<!--# if ($operateThread['unite']){ #--><li><a href="{@url:bbs/manage/unite}">合并</a></li><!--# } #-->
+											<!--# if ($operateThread['lock']){ #--><li><a href="{@url:bbs/manage/lock}">锁定</a></li><!--# } #-->
+											<!--# if ($operateThread['down']){ #--><li><a href="{@url:bbs/manage/down}">压帖</a></li><!--# } #-->
+											<!--# if ($operateThread['delete']){ #--><li><a href="{@url:bbs/manage/delete}">删除</a></li><!--# } #-->
+										</ul>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<!--# } #-->
+					<advertisement id='Thread.Btm' sys='1'/>
+		<div id="cloudwind_forum_bottom"></div>
+	</div>
+	
+<template source='TPL:common.wap.footer' load='true' />
+</div>
+
+<script>
+var FID = '{$pwforum->fid}';
+Wind.use('jquery', 'global', function(){
+<!--# if(!$is_design) { #-->
+<!--# if (!$threaddb) { #-->
+	//无内容 发帖引导
+	Wind.js(GV.JS_ROOT + 'pages/bbs/postGuide.js?v=' + GV.JS_VERSION);
+<!--# } else { #-->
+	if(GV.U_ID) {
+		Wind.js(GV.JS_ROOT +'pages/bbs/threadManage.js?v=' + GV.JS_VERSION);
+	}
+<!--# } #-->
+<!--# } #-->
+});
+</script>
+<pw-end/>
+</body>
+</html>

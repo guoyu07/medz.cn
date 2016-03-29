@@ -1,0 +1,91 @@
+<!doctype html>
+<html>
+<head>
+<template source='TPL:common.wap.head' load='true' />
+<link href="{@theme:css}/wap_forum.css?v={@NEXT_RELEASE}" rel="stylesheet" />
+</head>
+<body>
+<pw-start/>
+<div class="wrap">
+<template source='TPL:common.wap.header' load='true' />
+	<div class="main_wrap">
+		<pw-tpl id="main_segment"/>
+		<div class="bread_crumb" id="bread_crumb">
+			<a href="{@url:}" class="home" title="{@C:site.info.name}">首页</a><em>&gt;</em><a href="{@url:bbs/forum/my}">我的版块</a>
+		</div>
+		<div class="main cc">
+			<div class="main_body">
+				<div class="main_content cc">
+					<pw-tpl id="first_segment"/>
+					<advertisement id='Thread.Top' sys='1'/>
+					<div class="box_wrap thread_page">
+						<nav>
+							<div class="content_nav" id="hashpos_ttype">
+								<div class="content_filter">
+									<a href="{@url:bbs/forum/my?order=postdate}" class="{@Pw::isCurrent($order == 'postdate')}">最新发帖</a><span>|</span><a href="{@url:bbs/forum/my}" class="{@Pw::isCurrent($order != 'postdate')}">最后回复</a></div>
+								<ul>
+									<li><a href="{@url:bbs/index/run}">本站新帖</a></li>
+									<li class="current"><a rel="nofollow" href="{@url:bbs/forum/my}">我的版块</a></li>
+								</ul>
+							</div>
+						</nav>
+						<div class="thread_posts_list">
+							<!--# if ($threadList) { #-->
+							<div width="100%" id="J_posts_list" summary="帖子列表">
+                                <!--# $tpc_topped = 0; #-->
+								<!--# foreach ($threadList as $key => $value) { #-->
+                                <!--# if ($tpc_topped && !isset($value['issort'])) { #-->
+								<div class="tac ordinary">普通主题</div>
+								<!--# } #-->
+								<div class="subject">
+                                        <div class="author" style="background-image: url({@Pw::getAvatar($value['created_userid'], 'small')});"><a class="J_user_card_show" data-uid="{$value['created_userid']}" href="{@url:space/index/run?uid=$value['created_userid']}">作者</a></div>
+                                       <div class="title">
+                                            <a href="{@url:bbs/read/run?tid=$value['tid']&fid=$value['fid']}" class="st" style="{$value['highlight_style']}" title="{$value['subject']}">
+                                                <span class="posts_icon"><i class="icon_{$value['icon']}"></i></span>
+                                                    {@Pw::substrs($value['subject'],$numofthreadtitle)}
+                                            	<hook class='$threadList' name='createHtmlAfterSubject' args="array($value)" />
+                                            	<!--# if ($value['ifupload']) { #-->
+                                            	<span class="posts_icon">
+                                            		<i class="icon_{$uploadIcon[$value['ifupload']]}" title="{$icon[$uploadIcon[$value['ifupload']]]}"></i>
+                                            	</span>
+                                                <!--# } #-->
+                                             </a>
+                                        </div>
+										<div class="info">
+											<!--# if ($operateThread) { #-->
+											<input class="J_check" name="" type="checkbox" value="{$value['tid']}" />
+											<!--# } #-->                                        
+											楼主：<a class="J_user_card_show" data-uid="{$value['created_userid']}" href="{@url:space/index/run?uid=$value['created_userid']}">{$value['created_username']}</a><span><!--# echo Pw::time2str($value['created_time'], 'Y-m-d');#--></span>
+    										<span>浏览<em>{$value['hits']}</em></span>
+										</div>
+     									<div class="num">
+    										<span>回复<em>{$value['replies']}</em></span>
+											<a href="{@url:space/index/run?uid=$value['lastpost_userid']}">{$value['lastpost_username']}</a>最后回复于<span><a href="{@url:bbs/read/run?tid=$value['tid']&fid=$value['fid']&page=e}#a" rel="nofollow"><!--# echo Pw::time2str($value['lastpost_time'], 'm-d H:i');#--></a></span>
+    									</div>                                       
+								</div>
+                                <!--# $tpc_topped = isset($value['issort']); #-->
+								<!--# } #-->
+							</div>
+							<!--# } else { #-->
+							<div class="not_followforum">
+							还没有内容？点击加入，轻松获取版块最新帖子
+							</div>
+							<!--# } #-->
+						</div>
+					</div>
+					<div class="J_page_wrap cc" data-key="true">
+						<page tpl="TPL:common.page" page="$page" per="$perpage" count="$count" total="$totalpage" url="bbs/forum/my" args="$urlargs"/>
+					</div>
+					<advertisement id='Thread.Btm' sys='1'/>
+				</div>
+			</div>
+		</div>
+	</div>
+<template source='TPL:common.wap.footer' load='true' />
+</div>
+<script>
+Wind.use('jquery', 'global');
+</script>
+<pw-end/>
+</body>
+</html>

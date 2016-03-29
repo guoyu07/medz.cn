@@ -1,0 +1,60 @@
+<!--.main-wrap,#main End-->
+<div class="tac">
+<advertisement id='Site.Footer1' sys='1'/><br />
+<advertisement id='Site.Footer2' sys='1'/>
+</div>
+<div class="footer_wrap">
+	<div class="footer">
+		<pw-drag id="footer_segment"/>
+		<div class="bottom">
+            <ul>
+    		<!--#
+    			$nav = Wekit::load('SRV:nav.bo.PwNavBo');
+    			$bottom = $nav->getNavFromConfig('bottom');
+    			foreach($bottom as $key=>$value){
+    			$value['name'] = str_ireplace(Wekit::C('site','info.url'),Wind::getApp()->getRequest()->getBaseUrl(true),$value['name']);
+    		#-->
+    			<li>{$value['name']|html}</li>
+    		<!--# } #-->            
+            </ul>
+            <ul>
+                <li style="width:50%;"><a rel="nofollow" style="color:#15C;" href="#">虚位以待客户端</a></li>
+                <li style="width:50%;"><a rel="nofollow" style="color:#15C;" href="javascript:notMobile()">电脑版</a></li>
+            </ul>
+
+		</div>
+		<p>Powered by <a href="http://www.phpwind.net/" target="_blank" rel="nofollow">phpwind v{@NEXT_VERSION}</a>
+		<p>{@Wekit::C('site','statisticscode')|html}</p>
+	</div>
+	<advertisement id='Site.FloatLeft' sys='1'/>
+	<advertisement id='Site.FloatRight' sys='1'/>
+	<advertisement id='Site.PopupNotice' sys='1'/>
+	<div id="cloudwind_common_bottom"></div>
+	<hook name="footer"/>
+</div>
+
+<!--返回顶部-->
+<a href="#" rel="nofollow" role="button" id="back_top" tabindex="-1">返回顶部</a>
+
+<!--#  #-->
+<script>
+function notMobile() {
+	document.cookie = "useMobile=no";
+    var url = window.location.href;
+    var reg = new RegExp("{@url:}", "i");
+    url = url.replace(reg, "{@Wekit::C('site','info.url')}"+"/");
+	window.location.href = url;
+}
+
+Wind.use('jquery', 'global', function(){
+    
+	//点击头部搜索
+	var head_search_a = $('#J_head_search_a');
+	if(head_search_a.length) {
+		Wind.Util.clickToggle({
+			elem : head_search_a,				//点击元素
+			list : $('#J_head_search_pop'),	});
+	}
+    
+});
+</script>

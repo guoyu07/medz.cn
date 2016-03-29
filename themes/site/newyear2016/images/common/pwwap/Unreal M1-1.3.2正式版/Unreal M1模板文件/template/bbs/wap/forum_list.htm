@@ -1,0 +1,59 @@
+<!doctype html>
+<html>
+<head>
+<template source='TPL:common.wap.head' load='true' />
+<link href="{@theme:css}/wap_forum.css?v={@NEXT_RELEASE}" rel="stylesheet" />
+</head>
+<body>
+<pw-start/>
+<div class="wrap">
+<template source='TPL:common.wap.header' load='true' />
+	<div class="main_wrap">
+		<pw-tpl id="main_segment"/>
+		<div class="wps cc">
+		<div class="bread_crumb" id="bread_crumb">
+			<a href="{@url:}" class="home" title="{@C:site.info.name}">首页</a><em>&gt;</em><span>版块列表</span>
+		</div>
+		</div>
+		<div class="forum_page">
+				<!--# foreach ($cateList as $_cateId => $_cate) { #-->
+				<div class="list-a cc">
+					<div class="title-t subforumshow" href="#sub_forum_{$_cateId}">
+						<span class="o"><img src="{@theme:site.images}/vi_wap/collapsed_yes.png" zsrc="{@theme:site.images}/vi_wap/collapsed_yes.png" style="display: inline; visibility: visible;"></span>
+						<h3><a href="{@url:bbs/cate/run?fid=$_cateId}">{$_cate['name']|html}</a></h3>
+					</div>
+					<div class="content list-c">
+						<div class="list-cUl" id="sub_forum_{$_cateId}" class="sub_forum ">
+					    <segment tpl="wap.forum_list_table" name="one_across" args="$_cate,$forumList[$_cateId]" />
+						</div>
+					</div>
+				</div>
+				<!--# } #-->
+		</div>
+		<pw-tpl id="forumlist_bottom"/>
+	</div>
+<script type="text/javascript">
+(function() {
+$('.sub_forum').css('display', 'block');
+$('.subforumshow').on('click', function() {
+var obj = $(this);
+var subobj = $(obj.attr('href'));
+if(subobj.css('display') == 'none') {
+subobj.css('display', 'block');
+obj.find('img').attr('src', '{@theme:site.images}/vi_wap/collapsed_yes.png');
+} else {
+subobj.css('display', 'none');
+obj.find('img').attr('src', '{@theme:site.images}/vi_wap/collapsed_no.png');
+}
+});
+ })();
+</script>
+<template source='TPL:common.wap.footer' load='true' />
+</div>
+<script>
+Wind.use('jquery', 'global', function(){
+});
+</script>
+<pw-end/>
+</body>
+</html>

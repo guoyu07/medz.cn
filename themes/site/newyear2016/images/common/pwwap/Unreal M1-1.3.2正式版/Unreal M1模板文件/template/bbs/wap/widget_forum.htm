@@ -1,0 +1,36 @@
+<!--# if (!$pwforum->foruminfo['hassub']) { #-->
+<div class="rules">
+	<div class="ptn" id="J_forum_info_box">
+		<!--# if ($logo = $pwforum->foruminfo['logo']) { #-->
+		<div class="banner"><img src="{@Pw::getPath($logo)}" alt="{$pwforum->foruminfo['name']}" /></div>
+		<!--# } #-->
+		<div class="num">
+			<ul class="cc">
+				<li>今日：<em>{$pwforum->foruminfo['todayposts']}</em></li>
+				<li>主题：<em>{$pwforum->foruminfo['threads']}</em></li>
+				<li>总帖：<em>{$pwforum->foruminfo['article']}</em></li>
+			</ul>
+		</div>
+		<!--# if ($forumManager = $pwforum->getManager()) { #-->
+		<div class="moderator">
+			版主：<!--# foreach ($forumManager as $key => $value) { #-->{@$key ? '，' : ''}<a class="J_user_card_show" data-username="{$value}" href="{@url:space/index/run?username=$value}">{$value}</a><!--# } #-->
+		</div>
+		<!--# } #-->
+		<div class="notice">
+			<span class="J_forum_intro">{@$pwforum->foruminfo['descrip']|html}<!-- &nbsp;&nbsp;<a href="#" class="more s4 J_forum_intro_slide" data-role="down">更多&gt;&gt;</a> --></span>
+		</div>
+	</div>
+</div>
+<!--# } #-->
+	<!--# if ($pwforum->foruminfo['hassub'] && $sub = $pwforum->getSubForums(1, true)) { #-->
+	<div class="list-a cc">
+		<div class="title-t subforumshow">
+			<h3>子版块</h3>
+		</div>
+		<div class="content list-c">
+			<div class="list-cUl">
+		    <segment tpl="wap.forum_list_table" name="one_across" args="$pwforum->foruminfo,$sub" />
+			</div>
+		</div>
+	</div>
+	<!--# } #-->
